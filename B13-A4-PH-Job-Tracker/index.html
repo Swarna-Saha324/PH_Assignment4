@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <!-- Tailwind -->
+     <!-- Tailwind+CSS -->
+     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
      <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
      <!-- Goggle fonts -->
@@ -21,11 +22,27 @@
 *{
             font-family: "Geist", sans-serif;
             font-style: normal;
+            background-color: #ffffff;
 } </style>
 </head>
-<body>
-    <h1 class="text-3xl font-bold text-center mt-10">Job Tracker</h1>
-  
+<body >
+    <header class="w-[80%] mx-auto">
+    <h1 class="text-[32px] font-bold  mt-[60px]  text-[#002c5cFF] ">Job Application Tracker</h1>
+    <div class ="grid grid-cols-3 gap-[16px]  mt-[20px] ">
+    <div class=" bg-[#ffffff] rounded-[8px] p-[20px] border-[1px] border-[#f1f2f4]">
+        <p>Total</p>
+        <p id="totalCount" class="text-[#002c5cFF] font-bold">8</p>
+    </div>
+    <div  class=" bg-[#ffffff] rounded-[8px] p-[20px] border-[1px] border-[#f1f2f4]">
+        <p>Interview</p>
+        <p  id="interviewCount" class="text-[#10b981FF] font-bold">0</p>
+    </div>
+    <div class=" bg-[#ffffff] rounded-[8px] p-[20px] border-[1px] border-[#f1f2f4]">
+        <p>Rejected</p>
+        <p  id="rejectedCount" class="text-[#ef4444FF] font-bold">0</p>
+    </div>
+    </div>
+  </header>
     
 
     

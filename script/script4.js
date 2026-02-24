@@ -127,7 +127,7 @@ mainContainer.addEventListener('click', function (event) {
 function getEmptyStateHTML(message) {
     return `
         <div class="flex flex-col items-center justify-center py-20 bg-white rounded-lg border border-[#f1f2f4]">
-            <img src="../jobs.png" class="w-20 mb-4 opacity-50" alt="No jobs">
+            <img src="jobs.png" class="w-20 mb-4 opacity-50" alt="No jobs">
             <h2 class="text-2xl font-bold text-[#002c5c]">${message}</h2>
             <p class="text-gray-400 mt-2">Check back soon for new job opportunities</p>
         </div>`;

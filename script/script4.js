@@ -35,7 +35,7 @@ function calculateCount() {
     interviewCount.innerText = interviewList.length;
     rejectedCount.innerText = rejectedList.length;
 
-    // "X of Y jobs" Logic
+    // 
     const totalJobs = allCardSection.children.length;
     const availableCountSpan = document.getElementById('availableCount');
 

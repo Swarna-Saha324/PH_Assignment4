@@ -23,10 +23,29 @@ if (!filterSection) {
     allCardSection.parentNode.appendChild(filterSection);
 }
 
+// function calculateCount() {
+//     total.innerText = allCardSection.children.length;
+//     interviewCount.innerText = interviewList.length;
+//     rejectedCount.innerText = rejectedList.length;
+// }
+
 function calculateCount() {
+    // Top Header Stats
     total.innerText = allCardSection.children.length;
     interviewCount.innerText = interviewList.length;
     rejectedCount.innerText = rejectedList.length;
+
+    // "X of Y jobs" Logic
+    const totalJobs = allCardSection.children.length;
+    const availableCountSpan = document.getElementById('availableCount');
+
+    if (currentStatus === 'allBtn') {
+        availableCountSpan.innerText = `${totalJobs} jobs`;
+    } else if (currentStatus === 'interviewBtn') {
+        availableCountSpan.innerText = `${rejectedList.length} of ${totalJobs} jobs`;
+    } else if (currentStatus === 'rejectedBtn') {
+        availableCountSpan.innerText = `${interviewList.length} of ${totalJobs} jobs`;
+    }
 }
 
 // Step 1: 
@@ -35,6 +54,7 @@ function toggleStyle(id) {
     [allFilterBtn, interviewFilterBtn, rejectedFilterBtn].forEach(btn => {
         btn.classList.remove('bg-blue-700', 'text-white', 'font-bold');
         btn.classList.add('bg-white', 'text-[#64748bFF]');
+        calculateCount();
     });
 
     const selected = document.getElementById(id);
@@ -150,4 +170,4 @@ function renderCard(job, status, statusClass) {
     filterSection.appendChild(div);
 }
 
-calculateCount();
+// calculateCount();

@@ -2,7 +2,7 @@ let interviewList = [];
 let rejectedList = [];
 let currentStatus = 'allBtn';
 
-// Elements
+
 const total = document.getElementById('totalCount');
 const interviewCount = document.getElementById('interviewCount');
 const rejectedCount = document.getElementById('rejectedCount');
@@ -14,7 +14,7 @@ const rejectedFilterBtn = document.getElementById('rejectedBtn');
 const allCardSection = document.getElementById('allCard');
 const mainContainer = document.querySelector('main');
 
-// Create/Select the Filtered Section
+
 let filterSection = document.getElementById('filtered-section');
 if (!filterSection) {
     filterSection = document.createElement('section');
@@ -29,9 +29,9 @@ function calculateCount() {
     rejectedCount.innerText = rejectedList.length;
 }
 
-// Step 1: Filter Button Styling and Section Toggling
+// Step 1: 
 function toggleStyle(id) {
-    // Reset styles for all buttons
+   
     [allFilterBtn, interviewFilterBtn, rejectedFilterBtn].forEach(btn => {
         btn.classList.remove('bg-blue-700', 'text-white', 'font-bold');
         btn.classList.add('bg-white', 'text-[#64748bFF]');
@@ -40,7 +40,7 @@ function toggleStyle(id) {
     const selected = document.getElementById(id);
     currentStatus = id;
 
-    // Apply active styles
+    
     selected.classList.remove('bg-white', 'text-[#64748bFF]');
     selected.classList.add('bg-blue-700', 'text-white', 'font-bold');
 
@@ -59,9 +59,9 @@ function toggleStyle(id) {
     }
 }
 
-// Step 2: Event Delegation (Move, Delete)
+// Step 2: Event Delegation 
 mainContainer.addEventListener('click', function (event) {
-    // Trash/Delete Logic
+   
     if (event.target.classList.contains('fa-trash-can') || event.target.closest('.fa-trash-can')) {
         const parenNode = event.target.closest('.flex.justify-between');
         const workName = parenNode.querySelector('.work').innerText;
@@ -103,11 +103,11 @@ mainContainer.addEventListener('click', function (event) {
     }
 });
 
-// Step 3: Render Functions with "No Jobs Available" View
+// Step 3:
 function getEmptyStateHTML(message) {
     return `
         <div class="flex flex-col items-center justify-center py-20 bg-white rounded-lg border border-[#f1f2f4]">
-            <img src="../B13-A4-PH-Job-Tracker/jobs.png" class="w-20 mb-4 opacity-50" alt="No jobs">
+            <img src="../jobs.png" class="w-20 mb-4 opacity-50" alt="No jobs">
             <h2 class="text-2xl font-bold text-[#002c5c]">${message}</h2>
             <p class="text-gray-400 mt-2">Check back soon for new job opportunities</p>
         </div>`;

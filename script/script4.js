@@ -23,11 +23,11 @@ if (!filterSection) {
     allCardSection.parentNode.appendChild(filterSection);
 }
 
-// function calculateCount() {
-//     total.innerText = allCardSection.children.length;
-//     interviewCount.innerText = interviewList.length;
-//     rejectedCount.innerText = rejectedList.length;
-// }
+function calculateCount() {
+    total.innerText = allCardSection.children.length;
+    interviewCount.innerText = interviewList.length;
+    rejectedCount.innerText = rejectedList.length;
+}
 
 function calculateCount() {
     // Top Header Stats
@@ -47,6 +47,7 @@ function calculateCount() {
         availableCountSpan.innerText = `${interviewList.length} of ${totalJobs} jobs`;
     }
 }
+
 
 // Step 1: 
 function toggleStyle(id) {
@@ -79,46 +80,72 @@ function toggleStyle(id) {
     }
 }
 
-// Step 2: Event Delegation 
-mainContainer.addEventListener('click', function (event) {
-   
-    if (event.target.classList.contains('fa-trash-can') || event.target.closest('.fa-trash-can')) {
-        const parenNode = event.target.closest('.flex.justify-between');
-        const workName = parenNode.querySelector('.work').innerText;
 
+mainContainer.addEventListener('click', function (event) {
+    const target = event.target;
+    const action = target.innerText.trim();
+
+    
+    if (target.classList.contains('fa-trash-can') || target.closest('.fa-trash-can')) {
+        const card = target.closest('.flex.justify-between');
+        const workName = card.querySelector('.work').innerText;
+
+        
         interviewList = interviewList.filter(item => item.work !== workName);
         rejectedList = rejectedList.filter(item => item.work !== workName);
-        parenNode.remove();
 
-        if (currentStatus === 'interviewBtn') renderInterview();
-        if (currentStatus === 'rejectedBtn') renderRejected();
+       
+        const allCards = allCardSection.querySelectorAll('.work');
+        allCards.forEach(title => {
+            if(title.innerText === workName) {
+                title.closest('.flex.justify-between').remove();
+            }
+        });
+
+        
+        if (currentStatus !== 'allBtn') card.remove();
+
         calculateCount();
         return;
     }
 
-    // Status Buttons (Interview/Rejected)
-    const action = event.target.innerText;
+    // 2. INTERVIEW / REJECTED LOGIC
     if (action === 'INTERVIEW' || action === 'REJECTED') {
-        const parenNode = event.target.closest('.flex-1').parentNode;
-        const cardInfo = {
-            work: parenNode.querySelector('.work').innerText,
-            expert: parenNode.querySelector('.expert').innerText,
-            salary: parenNode.querySelector('.salary').innerText,
-            explain: parenNode.querySelector('.explain').innerText
-        };
+        
+        const card = target.closest('.flex.justify-between');
+        
+        const work = card.querySelector('.work').innerText;
+        const expert = card.querySelector('.expert').innerText;
+        const salary = card.querySelector('.salary').innerText;
+        const explain = card.querySelector('.explain').innerText;
+
+        const cardInfo = { work, expert, salary, explain };
+
+        // Update the status label on the card in the "All" section
+        const allCards = allCardSection.querySelectorAll('.work');
+        allCards.forEach(title => {
+            if(title.innerText === work) {
+                const label = title.closest('.flex-1').querySelector('.change');
+                label.innerText = action;
+                // Change label color based on status
+                label.className = `change px-3 py-1 uppercase text-[12px] font-bold inline-block rounded-sm mb-3 ${
+                    action === 'INTERVIEW' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'
+                }`;
+            }
+        });
 
         if (action === 'INTERVIEW') {
-            parenNode.querySelector('.change').innerText = 'INTERVIEW';
-            if (!interviewList.find(i => i.work === cardInfo.work)) interviewList.push(cardInfo);
-            rejectedList = rejectedList.filter(i => i.work !== cardInfo.work);
+            if (!interviewList.find(i => i.work === work)) interviewList.push(cardInfo);
+            rejectedList = rejectedList.filter(i => i.work !== work);
         } else {
-            parenNode.querySelector('.change').innerText = 'REJECTED';
-            if (!rejectedList.find(i => i.work === cardInfo.work)) rejectedList.push(cardInfo);
-            interviewList = interviewList.filter(i => i.work !== cardInfo.work);
+            if (!rejectedList.find(i => i.work === work)) rejectedList.push(cardInfo);
+            interviewList = interviewList.filter(i => i.work !== work);
         }
 
+        // Keep current view in sync
         if (currentStatus === 'interviewBtn') renderInterview();
         if (currentStatus === 'rejectedBtn') renderRejected();
+        
         calculateCount();
     }
 });
